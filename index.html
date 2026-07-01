@@ -1,17 +1,34 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alfian Afriansyah | Data Analyst Portfolio</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Portfolio Alfian Afriansyah — Professional Data Analyst. Ahli dalam SQL, Python, Excel, Tableau, dan Looker Studio untuk mengubah data menjadi keputusan strategis.">
+    <meta name="description" content="Portfolio Alfian Afriansyah — Professional Data Analyst.">
     <meta name="author" content="Alfian Afriansyah">
-    <meta property="og:title" content="Alfian Afriansyah | Data Analyst Portfolio">
-    <meta property="og:description" content="Transforming Data into Strategic Decisions.">
-    <meta property="og:type" content="website">
 
+    <script>
+      // Safeguard for window.fetch setter in sandboxed iframe environments
+      try {
+        let currentFetch = window.fetch;
+        Object.defineProperty(window, 'fetch', {
+          get() {
+            return currentFetch;
+          },
+          set(value) {
+            currentFetch = value;
+          },
+          configurable: true,
+          enumerable: true
+        });
+      } catch (e) {
+        console.warn("Could not patch window.fetch setter:", e);
+      }
+    </script>
+
+    <!-- Fonts & CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -53,12 +70,8 @@
         }
 
         nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 5%; max-width: 1400px; margin: 0 auto;
         }
         
         .logo { font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 10px;}
@@ -72,96 +85,22 @@
         .nav-links a { text-decoration: none; color: var(--text-muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
         .nav-links a:hover { color: var(--text-main); }
         
-        .btn-primary {
-            background-color: var(--btn-bg);
-            color: var(--btn-text);
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: opacity 0.3s ease;
+        .btn-primary, .btn-secondary {
+            padding: 0.6rem 1.5rem; border-radius: 50px; text-decoration: none;
+            font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease;
         }
+        .btn-primary { background-color: var(--btn-bg); color: var(--btn-text); }
         .btn-primary:hover { opacity: 0.9; }
-
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--text-main);
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            border: 1px solid #d1d5db;
-            transition: all 0.3s ease;
-        }
+        .btn-secondary { background-color: transparent; color: var(--text-main); border: 1px solid #d1d5db; }
         .btn-secondary:hover { background-color: #f3f4f6; border-color: #9ca3af; }
 
         .btn-group { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; }
+        .btn-group.left { justify-content: flex-start; }
 
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(17, 24, 39, 0.4); backdrop-filter: blur(4px);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 1000; opacity: 0; visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        
-        .modal-content {
-            background: var(--card-bg); width: 90%; max-width: 800px;
-            max-height: 90vh; overflow-y: auto; border-radius: 24px;
-            padding: 2.5rem; position: relative;
-            transform: translateY(20px); transition: transform 0.3s ease;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        .modal-overlay.active .modal-content { transform: translateY(0); }
-        
-        .close-btn {
-            position: absolute; top: 1.5rem; right: 1.5rem;
-            background: #f3f4f6; border: none; border-radius: 50%;
-            width: 36px; height: 36px; display: flex;
-            justify-content: center; align-items: center;
-            cursor: pointer; font-size: 1.2rem; color: var(--text-muted);
-            transition: background 0.2s;
-        }
-        .close-btn:hover { background: #e5e7eb; color: var(--text-main); }
-        
-        .modal-body { margin-top: 1.5rem; }
-        .modal-section { margin-bottom: 2rem; }
-        .modal-section h4 { 
-            color: var(--text-main); font-size: 1.1rem; margin-bottom: 0.75rem; 
-            display: inline-block; border-bottom: 3px solid var(--accent-yellow);
-            padding-bottom: 2px;
-        }
-        .modal-section p { color: var(--text-muted); line-height: 1.7; }
-        
-        .chart-placeholder {
-            background: #f8fafc; border: 2px dashed #cbd5e1;
-            border-radius: 16px; height: 300px; display: flex;
-            align-items: center; justify-content: center;
-            color: #94a3b8; margin: 1.5rem 0; font-weight: 500;
-        }
-
-        .project-card { cursor: pointer; position: relative; }
-        .project-card::after {
-            content: 'View Details →'; position: absolute;
-            bottom: 2.5rem; right: 2.5rem; font-size: 0.9rem;
-            font-weight: 600; color: #3b82f6; opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .project-card:hover::after { opacity: 1; }
-
-        /* ===== HERO with Photo ===== */
+        /* HERO with Photo */
         .hero {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 3.5rem;
-            flex-wrap: wrap-reverse;
-            padding: 5rem 5% 4rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            display: flex; align-items: center; justify-content: center; gap: 3.5rem;
+            flex-wrap: wrap-reverse; padding: 5rem 5% 4rem; max-width: 1200px; margin: 0 auto;
         }
         .hero-text { flex: 1; min-width: 320px; max-width: 620px; }
         .hero-text .eyebrow {
@@ -169,74 +108,37 @@
             border: 1px solid #e5e7eb; border-radius: 50px; font-size: 0.85rem;
             color: var(--text-muted); margin-bottom: 1.25rem;
         }
-        .hero-text h1 {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            margin-bottom: 1.5rem;
-        }
-        .hero-text p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            line-height: 1.6;
-        }
-        .btn-group.left { justify-content: flex-start; }
+        .hero-text h1 { font-size: 3.5rem; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
+        .hero-text p { color: var(--text-muted); font-size: 1.1rem; line-height: 1.6; margin-bottom: 0.5rem; }
 
-        /* Photo frame */
-        .hero-photo-wrap {
-            position: relative;
-            flex-shrink: 0;
-        }
+        .hero-photo-wrap { position: relative; flex-shrink: 0; }
         .hero-photo {
-            width: 320px; height: 380px;
-            object-fit: cover;
-            border-radius: 28px;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-            position: relative;
-            z-index: 2;
+            width: 320px; height: 380px; object-fit: cover; border-radius: 28px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); position: relative; z-index: 2;
         }
-        .hero-photo-wrap::before {
-            content: '';
-            position: absolute;
-            top: -18px; left: -18px;
-            width: 120px; height: 120px;
-            background: var(--accent-yellow);
-            border-radius: 24px;
-            z-index: 1;
+        .hero-photo-wrap::before, .hero-photo-wrap::after {
+            content: ''; position: absolute; width: 120px; height: 120px; border-radius: 24px; z-index: 1;
         }
-        .hero-photo-wrap::after {
-            content: '';
-            position: absolute;
-            bottom: -18px; right: -18px;
-            width: 120px; height: 120px;
-            background: var(--accent-blue);
-            border-radius: 24px;
-            z-index: 1;
-        }
+        .hero-photo-wrap::before { top: -18px; left: -18px; background: var(--accent-yellow); }
+        .hero-photo-wrap::after { bottom: -18px; right: -18px; background: var(--accent-blue); }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 5%;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem 5%; }
 
-        /* ===== About Section ===== */
+        /* About Section */
+        .section-header { text-align: center; margin: 4rem 0 2rem; }
+        .section-badge {
+            display: inline-block; padding: 0.4rem 1rem; background: #ffffff;
+            border: 1px solid #e5e7eb; border-radius: 50px; font-size: 0.85rem;
+            color: var(--text-muted); margin-bottom: 1rem;
+        }
+        .section-header h2 { font-size: 2.5rem; font-weight: 600; }
+
         .about-grid {
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-            flex-wrap: wrap;
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
+            display: flex; align-items: center; gap: 3rem; flex-wrap: wrap; background: var(--card-bg);
+            border-radius: 24px; padding: 3rem; box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
             border: 1px solid rgba(0,0,0,0.02);
         }
-        .about-photo {
-            width: 260px; height: 300px; object-fit: cover;
-            border-radius: 20px; flex-shrink: 0;
-        }
+        .about-photo { width: 260px; height: 300px; object-fit: cover; border-radius: 20px; flex-shrink: 0; }
         .about-text { flex: 1; min-width: 300px; }
         .about-text h2 { font-size: 2rem; margin-bottom: 1rem; }
         .about-text p { color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem; }
@@ -244,75 +146,25 @@
         .stat-num { font-size: 1.8rem; font-weight: 700; color: var(--text-main); }
         .stat-label { font-size: 0.85rem; color: var(--text-muted); }
 
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 4rem;
-        }
-
+        /* Bento Cards */
+        .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 4rem; }
         .card {
-            background-color: var(--card-bg);
-            border-radius: 24px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05);
-            border: 1px solid rgba(0,0,0,0.02);
+            background-color: var(--card-bg); border-radius: 24px; padding: 2.5rem;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.02);
             transition: transform 0.3s ease;
         }
         .card:hover { transform: translateY(-5px); }
-
         .card h3 { font-size: 1.25rem; margin-bottom: 1rem; }
         .card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
         
         .badge-container { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
-        .badge {
-            background: #f3f4f6;
-            color: #374151;
-            padding: 0.4rem 0.8rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
+        .badge { background: #f3f4f6; color: #374151; padding: 0.4rem 0.8rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; }
         .badge.highlight { background: #e0e7ff; color: #4338ca; }
 
-        .section-header { text-align: center; margin: 4rem 0 2rem; }
-        .section-badge {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-        }
-        .section-header h2 { font-size: 2.5rem; font-weight: 600; }
-
         .timeline { margin-top: 1.5rem; }
-        .timeline-item {
-            padding-left: 1.5rem;
-            border-left: 2px solid #e5e7eb;
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -6px;
-            top: 0;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--text-main);
-        }
+        .timeline-item { padding-left: 1.5rem; border-left: 2px solid #e5e7eb; margin-bottom: 1.5rem; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -6px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--text-main); }
         .timeline-date { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-bottom: 0.2rem;}
-
-        footer {
-            text-align: center;
-            padding: 3rem 1rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
 
         @media (max-width: 768px) {
             .hero-text h1 { font-size: 2.5rem; }
@@ -322,12 +174,15 @@
             .about-grid { padding: 2rem; }
         }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <!-- BACKGROUND -->
     <div class="gradient-bg"></div>
 
+    <!-- NAVBAR -->
     <nav>
         <div class="logo">
+            <!-- 📸 LINK FOTO 1 (Logo Kecil) -->
             <img src="https://novellum-filestore-mcp.s3.us-east-2.amazonaws.com/atxp:atxp_acct_8jbBxvt9jJUH5C3k7lZJr/b3a0b78f-7a04-432f-80ab-9ba922790057.png" alt="Alfian Afriansyah" class="logo-avatar">
             Alfian Afriansyah
         </div>
@@ -335,63 +190,50 @@
             <a href="#about">Profile</a>
             <a href="#skills">Tools</a>
             <a href="#projects">Projects</a>
-            <a href="#education">Education & Training</a>
         </div>
         <div style="display: flex; gap: 1rem;">
-            <a href="#" class="btn-secondary" download="CV_Alfian_Afriansyah.pdf">Download CV</a>
             <a href="mailto:contact@example.com" class="btn-primary">Get in touch</a>
         </div>
     </nav>
 
-    <!-- ===== HERO with Photo ===== -->
+    <!-- HERO SECTION -->
     <header class="hero">
         <div class="hero-text">
             <span class="eyebrow">👋 Available for opportunities</span>
             <h1>Transforming Data into Strategic Decisions.</h1>
             <p>Alfian Afriansyah — Professional Data Analyst blending analytical precision with actionable insights.</p>
             <div class="btn-group left">
-                <a href="#projects" class="btn-primary" style="padding: 1rem 2rem; font-size: 1rem;">View My Projects</a>
-                <a href="#" class="btn-secondary" style="padding: 1rem 2rem; font-size: 1rem;" download="CV_Alfian_Afriansyah.pdf">Download CV</a>
+                <a href="#projects" class="btn-primary">View My Projects</a>
             </div>
         </div>
         <div class="hero-photo-wrap">
-            <!-- GANTI src ini dengan foto asli kamu (foto.jpg) -->
-            <img src="https://novellum-filestore-mcp.s3.us-east-2.amazonaws.com/atxp:atxp_acct_8jbBxvt9jJUH5C3k7lZJr/b3a0b78f-7a04-432f-80ab-9ba922790057.png" alt="Foto profil Alfian Afriansyah" class="hero-photo">
+            <!-- 📸 LINK FOTO 2 (Hero Besar) -->
+            <img src="https://novellum-filestore-mcp.s3.us-east-2.amazonaws.com/atxp:atxp_acct_8jbBxvt9jJUH5C3k7lZJr/b3a0b78f-7a04-432f-80ab-9ba922790057.png" alt="Foto profil Alfian" class="hero-photo">
         </div>
     </header>
 
     <div class="container">
-
-        <!-- ===== About Me Section ===== -->
+        <!-- ABOUT SECTION -->
         <div id="about" class="section-header">
             <div class="section-badge">Get to know me</div>
             <h2>About Me</h2>
         </div>
 
         <div class="about-grid">
-            <!-- GANTI src ini dengan foto asli kamu -->
+            <!-- 📸 LINK FOTO 3 (About Section) -->
             <img src="https://novellum-filestore-mcp.s3.us-east-2.amazonaws.com/atxp:atxp_acct_8jbBxvt9jJUH5C3k7lZJr/b3a0b78f-7a04-432f-80ab-9ba922790057.png" alt="Alfian Afriansyah" class="about-photo">
             <div class="about-text">
                 <h2>Halo, saya Alfian 👋</h2>
                 <p>Seorang Data Analyst dengan latar belakang Fisika Murni dari Universitas Brawijaya. Kombinasi antara pola pikir analitis yang terasah secara ilmiah dan keterampilan teknis data membuat saya senang membedah masalah kompleks menjadi insight yang jelas dan actionable.</p>
-                <p>Saya berfokus pada end-to-end data processing — mulai dari pengumpulan & pembersihan data, analisis mendalam, hingga menyajikannya dalam bentuk visualisasi yang mudah dipahami oleh pengambil keputusan.</p>
                 <div class="about-stats">
-                    <div>
-                        <div class="stat-num">3+</div>
-                        <div class="stat-label">Featured Projects</div>
-                    </div>
-                    <div>
-                        <div class="stat-num">5+</div>
-                        <div class="stat-label">Tools Mastered</div>
-                    </div>
-                    <div>
-                        <div class="stat-num">2024</div>
-                        <div class="stat-label">Bootcamp Graduate</div>
-                    </div>
+                    <div><div class="stat-num">3+</div><div class="stat-label">Featured Projects</div></div>
+                    <div><div class="stat-num">5+</div><div class="stat-label">Tools Mastered</div></div>
+                    <div><div class="stat-num">2024</div><div class="stat-label">Bootcamp Graduate</div></div>
                 </div>
             </div>
         </div>
 
+        <!-- SKILLS SECTION -->
         <div id="skills" class="section-header">
             <div class="section-badge">Competencies</div>
             <h2>Technical Arsenal</h2>
@@ -399,174 +241,34 @@
         
         <div class="bento-grid">
             <div class="card">
-                <h3>Data Manipulation & Analysis</h3>
-                <p>Handling large datasets, performing exploratory data analysis, and building complex logic for business needs.</p>
+                <h3>Data Manipulation</h3>
+                <p>Handling large datasets and complex logic.</p>
                 <div class="badge-container">
-                    <span class="badge highlight">Microsoft Excel</span>
-                    <span class="badge highlight">Google Sheets</span>
+                    <span class="badge highlight">Excel</span>
                     <span class="badge highlight">Python</span>
-                    <span class="badge">Advanced Formulas</span>
-                    <span class="badge">Pivot Tables</span>
                 </div>
             </div>
-            
             <div class="card">
                 <h3>Database & Querying</h3>
-                <p>Extracting structured information and managing relational databases efficiently.</p>
+                <p>Managing relational databases efficiently.</p>
                 <div class="badge-container">
                     <span class="badge highlight">SQL</span>
-                    <span class="badge">Data Extraction</span>
-                    <span class="badge">Relational Database</span>
                 </div>
             </div>
-            
             <div class="card">
                 <h3>Data Visualization</h3>
-                <p>Transforming complex numbers into interactive, easy-to-understand visual dashboards.</p>
+                <p>Interactive, easy-to-understand visual dashboards.</p>
                 <div class="badge-container">
                     <span class="badge highlight">Looker Studio</span>
-                    <span class="badge highlight">Tableau</span>
-                    <span class="badge">Dashboarding</span>
-                </div>
-            </div>
-        </div>
-
-        <div id="projects" class="section-header">
-            <div class="section-badge">Portfolio</div>
-            <h2>Highlighted Projects</h2>
-        </div>
-
-        <div class="bento-grid" style="grid-template-columns: 1fr;">
-            <div class="card project-card" style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;" onclick="openModal('modal-1')">
-                <div style="flex: 1; min-width: 300px;">
-                    <h3>1. Sales Performance & Optimization Tracker</h3>
-                    <p><strong>Tool:</strong> Microsoft Excel / Google Sheets</p>
-                    <p style="margin-top: 1rem;">Membangun sistem pelacakan data menggunakan <i>advanced formulas</i> dan <i>Pivot Tables</i> untuk menganalisis metrik penjualan, mengidentifikasi tren, dan memberikan insight untuk optimasi pendapatan perusahaan.</p>
-                </div>
-            </div>
-
-            <div class="card project-card" style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; background-color: #fafafa;" onclick="openModal('modal-2')">
-                <div style="flex: 1; min-width: 300px;">
-                    <h3>2. Exploratory Data Analysis & Predictive Modeling</h3>
-                    <p><strong>Tool:</strong> Python (Pandas, NumPy, Scikit-learn)</p>
-                    <p style="margin-top: 1rem;">Melakukan pembersihan data, visualisasi data awal, dan membangun model prediktif untuk memproyeksikan perilaku pengguna. Proyek ini memfokuskan pada pengolahan data mentah menjadi format yang siap dimodelkan.</p>
-                </div>
-            </div>
-
-            <div class="card project-card" style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center;" onclick="openModal('modal-3')">
-                <div style="flex: 1; min-width: 300px;">
-                    <h3>3. Interactive Business Intelligence Dashboard</h3>
-                    <p><strong>Tools:</strong> SQL + Looker Studio</p>
-                    <p style="margin-top: 1rem;">Mengekstraksi dan menyatukan data dari berbagai tabel menggunakan SQL, kemudian merancangnya menjadi <i>dashboard</i> interaktif di Looker Studio. <i>Dashboard</i> ini memfasilitasi manajemen dalam memantau KPI secara <i>real-time</i>.</p>
-                </div>
-            </div>
-        </div>
-
-        <div id="education" class="section-header">
-            <div class="section-badge">Background</div>
-            <h2>Education & Training</h2>
-        </div>
-
-        <div class="bento-grid">
-            <div class="card">
-                <h3>Formal Education</h3>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">Graduated 2024</div>
-                        <h4>Universitas Brawijaya</h4>
-                        <p>Bachelor's Degree in Pure Physics. Mengembangkan pola pikir analitis, pemecahan masalah matematis, dan logika terstruktur yang menjadi fundamental kuat dalam analisis data.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" style="background-color: var(--accent-yellow); color: #000;">
-                <h3>Professional Certification</h3>
-                <div class="timeline">
-                    <div class="timeline-item" style="border-left-color: #000;">
-                        <div class="timeline-date" style="color: #333;">Intensive Program</div>
-                        <h4>Harisenin Bootcamp Data Analyst</h4>
-                        <p>Batch 4. Pelatihan intensif yang mencakup end-to-end data processing, SQL querying, visualisasi data, hingga pengerjaan studi kasus analitik terapan.</p>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal 1: Excel -->
-    <div class="modal-overlay" id="modal-1" onclick="closeModal(event, 'modal-1')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="close-btn" onclick="closeModal(null, 'modal-1')">&times;</button>
-            <div class="badge highlight" style="display: inline-block; margin-bottom: 1rem;">Microsoft Excel</div>
-            <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Sales Performance & Optimization</h3>
-            <div class="modal-body">
-                <div class="modal-section"><h4>Business Case</h4><p>Perusahaan mengalami stagnasi pertumbuhan penjualan di kuartal terakhir dan kesulitan melacak performa tiap region secara real-time karena data tersebar di berbagai file.</p></div>
-                <div class="modal-section"><h4>Business Question</h4><p>Region mana yang memiliki underperformance terbesar, dan produk apa yang menyebabkan penurunan margin profit terbanyak?</p></div>
-                <div class="modal-section"><h4>Data & Metodologi</h4><p>Menggunakan data transaksi internal (10.000+ baris). Data dibersihkan dengan Power Query, dianalisis menggunakan Pivot Tables, dan dirumuskan metrik KPI menggunakan Advanced VLOOKUP/INDEX-MATCH dan logika bersarang (Nested IF).</p><div class="chart-placeholder">[ Area untuk Screenshot Dashboard Excel / Chart ]</div></div>
-                <div class="modal-section"><h4>Findings / Insight</h4><p>Penurunan profit bukan disebabkan oleh rendahnya volume penjualan, melainkan lonjakan diskon tidak terstruktur di Region Timur pada produk kategori B, yang memakan 25% margin.</p></div>
-                <div class="modal-section"><h4>Rekomendasi</h4><p>Standardisasi aturan diskon maksimal 15% untuk produk Kategori B di semua region, dan evaluasi ulang KPI tim sales Region Timur agar berfokus pada margin, bukan hanya volume.</p></div>
-                <div class="modal-section"><h4>Limitasi</h4><p>Data tidak mencakup faktor eksternal seperti kampanye marketing kompetitor di waktu yang sama, sehingga korelasi penurunan penjualan murni dilihat dari aspek operasional internal.</p></div>
-            </div>
-        </div>
-    </div>
+    <!-- REACT ROOT & VITE SCRIPT -->
+    <!-- Elemen ini tetap dibiarkan agar kompatibel dengan lingkungan React/Vite milikmu -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
 
-    <!-- Modal 2: Python -->
-    <div class="modal-overlay" id="modal-2" onclick="closeModal(event, 'modal-2')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="close-btn" onclick="closeModal(null, 'modal-2')">&times;</button>
-            <div class="badge highlight" style="display: inline-block; margin-bottom: 1rem;">Python</div>
-            <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Exploratory Data Analysis & Predictive Modeling</h3>
-            <div class="modal-body">
-                <div class="modal-section"><h4>Business Case</h4><p>Tingkat <i>churn</i> pada layanan aplikasi perusahaan meningkat 12% dalam 3 bulan terakhir, menyebabkan kerugian recurring revenue.</p></div>
-                <div class="modal-section"><h4>Business Question</h4><p>Apa faktor utama yang memicu pengguna untuk churn, dan bisakah kita memprediksi pengguna mana yang berisiko churn bulan depan?</p></div>
-                <div class="modal-section"><h4>Data & Metodologi</h4><p>Data diekstrak dari CRM (CSV, 50.000+ data pelanggan). Menggunakan Python (Pandas untuk Data Wrangling, Seaborn untuk visualisasi distribusi, dan Scikit-Learn untuk membuat model klasifikasi Random Forest).</p><div class="chart-placeholder">[ Area untuk Grafik EDA Python ]</div></div>
-                <div class="modal-section"><h4>Findings / Insight</h4><p>Insight mengejutkan: Pengguna yang paling banyak komplain ke CS justru memiliki churn rate rendah. Churn tertinggi berasal dari pengguna "Silent" yang tidak aktif login selama 14 hari pertama setelah registrasi.</p></div>
-                <div class="modal-section"><h4>Rekomendasi</h4><p>Kirimkan notifikasi push atau email <i>retention</i> otomatis khusus untuk pengguna yang tidak login dalam 7 hari pertama pasca-registrasi.</p></div>
-                <div class="modal-section"><h4>Limitasi</h4><p>Model prediksi hanya memiliki akurasi 82% karena kurangnya fitur demografis pengguna yang tidak diisi secara wajib saat registrasi.</p></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal 3: SQL + Looker -->
-    <div class="modal-overlay" id="modal-3" onclick="closeModal(event, 'modal-3')">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <button class="close-btn" onclick="closeModal(null, 'modal-3')">&times;</button>
-            <div class="badge highlight" style="display: inline-block; margin-bottom: 1rem;">SQL + Looker Studio</div>
-            <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Interactive BI Dashboard</h3>
-            <div class="modal-body">
-                <div class="modal-section"><h4>Business Case</h4><p>Tim manajemen menghabiskan 5-7 jam setiap minggu hanya untuk mengompilasi laporan operasional harian secara manual dari berbagai database terpisah.</p></div>
-                <div class="modal-section"><h4>Business Question</h4><p>Bagaimana memvisualisasikan metrik kunci (Daily Active Users, Revenue, Inventory Status) secara otomatis dalam satu tampilan yang mudah dipahami <i>C-Level</i>?</p></div>
-                <div class="modal-section"><h4>Data & Metodologi</h4><p>Menggunakan SQL (Google BigQuery) untuk menggabungkan (JOIN) tabel user, transaksi, dan inventaris. Membuat <i>view</i> khusus yang kemudian dihubungkan ke Looker Studio sebagai data source live.</p><div class="chart-placeholder">[ Area untuk Embed Link / Screenshot Looker Studio ]</div></div>
-                <div class="modal-section"><h4>Findings / Insight</h4><p>Terlihat anomali bahwa tingkat <i>cart abandonment</i> melonjak setiap jam 8-10 malam, yang berkorelasi kuat dengan waktu load sistem <i>payment gateway</i> yang lambat di jam tersebut.</p></div>
-                <div class="modal-section"><h4>Rekomendasi</h4><p>Berkoordinasi dengan vendor <i>payment gateway</i> terkait performa malam hari, dan tambahkan fitur <i>alert</i> otomatis jika <i>cart abandonment</i> melewati threshold 15% per jam.</p></div>
-                <div class="modal-section"><h4>Limitasi</h4><p>Dashboard di-refresh per 15 menit, bukan <i>real-time streaming</i>, sehingga ada sedikit latensi untuk keperluan operasional <i>flash sale</i>.</p></div>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        © 2024 Alfian Afriansyah — Data Analyst Portfolio. Built with ❤️ & data.
-    </footer>
-
-    <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeModal(event, modalId) {
-            if (!event || event.target.id === modalId) {
-                document.getElementById(modalId).classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        }
-        // Tutup modal dengan tombol ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal-overlay.active').forEach(m => {
-                    m.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                });
-            }
-        });
-    </script>
-</body>
+  </body>
 </html>
